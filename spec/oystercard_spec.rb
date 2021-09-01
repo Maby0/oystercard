@@ -18,4 +18,29 @@ describe Oystercard do
       expect { oystercard.top_up(1) }.to raise_error "Balance cannot exceed #{Oystercard::MAXIMUM_AMOUNT}"
     end 
   end
-end       
+
+  describe '#deduct(value)' do
+    it 'deducts money from balance' do
+      oystercard.top_up(20)
+      expect { oystercard.deduct(1) }.to change { oystercard.balance }.by(-1)
+    end
+  end
+
+  describe '#in_journey?, #touch_in, #touch_out' do
+    it 'responds to #in_journey?' do
+      expect(oystercard.in_journey).to eq false
+      # expect(oystercard).not_to be_in_journey
+    end
+
+    it '#touch_in is expected to change #in_journey to true' do
+      oystercard.touch_in
+      expect(oystercard.in_journey).to eq true
+    end
+
+    it '#touch_out is expected to change #in_journey to false' do
+      oystercard.touch_in
+      oystercard.touch_out
+      expect(oystercard.in_journey).to eq false
+    end
+  end
+end
