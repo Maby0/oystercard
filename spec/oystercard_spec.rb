@@ -33,14 +33,22 @@ describe Oystercard do
     end
 
     it '#touch_in is expected to change #in_journey to true' do
+      oystercard.top_up(2)
       oystercard.touch_in
       expect(oystercard.in_journey).to eq true
     end
 
     it '#touch_out is expected to change #in_journey to false' do
+      oystercard.top_up(2)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard.in_journey).to eq false
     end
+  
+    it 'raises an error when the balance is below 1, when touch_in is called' do
+      expect{ oystercard.touch_in }.to raise_error "Cannot touch in: balance is below #{Oystercard::MINIMUM_AMOUNT}"
+    end 
+
+  
   end
 end
