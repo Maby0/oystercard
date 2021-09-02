@@ -43,7 +43,7 @@ describe Oystercard do
 
       it '#touch_in remembers the entry_station' do
         oystercard.touch_in(entry_station)
-        expect(oystercard.entry_station).to eq(entry_station)
+        expect(oystercard.current_journey[:entry_station]).to eq(entry_station)
       end
 
       context 'when already in journey' do
@@ -58,7 +58,7 @@ describe Oystercard do
 
         it '#touch_out is expected to store the exit station' do
           oystercard.touch_out(exit_station)
-          expect(oystercard.exit_station).to eq exit_station
+          expect(oystercard.current_journey[:exit_station]).to eq exit_station
         end
 
         it '#touch_out deducts funds from current balance' do
