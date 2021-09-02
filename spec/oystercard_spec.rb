@@ -4,6 +4,7 @@ describe Oystercard do
   let (:oystercard) { described_class.new }
   let (:entry_station) { double :station }
   let (:exit_station) { double :station }
+
   describe 'initialize' do
     it 'has an empty list of journeys by default' do
       expect(subject.journeys).to be_empty
@@ -59,6 +60,7 @@ describe Oystercard do
           oystercard.touch_out(exit_station)
           expect(oystercard.exit_station).to eq exit_station
         end
+
         it '#touch_out deducts funds from current balance' do
           # doesn't raise an error yet if #touch_out is called before calling #touch_in
           expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by(-Oystercard::MINIMUM_CHARGE)
@@ -66,14 +68,14 @@ describe Oystercard do
       end
 
       context 'when journeys are completed' do
-        let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
+        let(:current_journey) { {entry_station: entry_station, exit_station: exit_station} }
 
         it 'stores a journey' do
           oystercard.touch_in(entry_station)
           oystercard.touch_out(exit_station)
-          expect(oystercard.journeys).to include journey
+          expect(oystercard.journeys).to include current_journey
         end
       end
-    end 
+    end
   end
 end
