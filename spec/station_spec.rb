@@ -1,9 +1,6 @@
 require 'station'
 
 describe Station do
-  # let(:subject) { Station.new("Euston", 2) }
-  # let(:zone) { Station.new }
-
   subject { described_class.new("Euston", 2) } 
   # walkthrough version: subject { described_class.new(name: "Euston", zone: 2) }
   # why does this not work? 
